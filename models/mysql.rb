@@ -13,6 +13,12 @@ Model.new(:srv1, 'Exports the entire server') do
   archive :source_control do |archive|
     archive.add '/git'
   end
+  archive :web_data do |archive|
+    archive.add '/home/b0tchsec/website_content'
+    archive.add '/home/modtalk/website_content'
+    archive.add '/home/modtalk/redmine_files'
+    archive.add '/home/modtalk/redmine_plugins'
+  end
   database MySQL do |db|
     db.name = :all
     db.additional_options = ['--quick', '--single-transaction']
