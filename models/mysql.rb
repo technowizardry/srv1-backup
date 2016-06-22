@@ -16,7 +16,10 @@ Model.new(:srv1, 'Exports the entire server') do
   database MySQL do |db|
     db.name = :all
     db.additional_options = ['--quick', '--single-transaction']
-    add_sql_credentials(db)
+    db.username = ENV['SQL_USER']
+    db.password = ENV['SQL_PASS']
+    db.host = ENV['SQL_HOST']
+    db.port = 3306
   end
   compress_with Bzip2
 
@@ -24,15 +27,14 @@ Model.new(:srv1, 'Exports the entire server') do
     encryption.password = ENV['ARCHIVE_PASS']
   end
 
-  store_with RSync do |rsync|
-    rsync.mode :ssh
+  run_date = Time.now.strftime '%Y-%m-%d'
+  store_with RSync, run_date.to_sym do |rsync|
+    rsync.keep = 5
+    rsync.mode = :ssh
+    rsync.additional_ssh_options = '-i /root/.ssh/id_rsa'
     rsync.host = ENV['STORAGE_HOST']
+    rsync.port = ENV['STORAGE_PORT'].to_i
     rsync.ssh_user = ENV['STORAGE_USER']
-  end
-  def add_sql_credentials(db)
-    db.username = ENV['SQL_USER']
-    db.password = ENV['SQL_PASS']
-    db.host = ENV['SQL_HOST']
-    db.port = 3306
+    rsync.path = "/media/sf_srv1.technowizardry.net/#{run_date}"
   end
 end
