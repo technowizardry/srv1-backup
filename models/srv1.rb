@@ -1,10 +1,10 @@
 # encoding: utf-8
 
 ##
-# Backup Generated: MySQL Dump
+# Backup Generated: Server
 # Once configured, you can run the backup with the following command:
 #
-# $ backup perform -t mysql [-c <path_to_configuration_file>]
+# $ backup perform -t srv1 [-c <path_to_configuration_file>]
 #
 # For more information about Backup's components, see the documentation at:
 # http://backup.github.io/backup
