@@ -43,4 +43,17 @@ Model.new(:srv1, 'Exports the entire server') do
     rsync.ssh_user = ENV['STORAGE_USER']
     rsync.path = "/media/sf_srv1.technowizardry.net/#{run_date}"
   end
+
+  if ENV.key? 'PUSHOVER_TOKEN'
+    notify_by Pushover do |p|
+      p.on_success = true
+      p.on_warning = true
+      p.on_failure = true
+
+      p.user = ENV['PUSHOVER_USER']
+      p.token = ENV['PUSHOVER_TOKEN']
+      p.title = 'Backup'
+      p.device = 'SRV1'
+    end
+  end
 end
