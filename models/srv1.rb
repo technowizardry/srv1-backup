@@ -46,8 +46,8 @@ Model.new(:srv1, 'Exports the entire server') do
 
   if ENV.key? 'PUSHOVER_TOKEN'
     notify_by Pushover do |p|
-      p.on_success = true
-      p.on_warning = true
+      p.on_success = false
+      p.on_warning = false
       p.on_failure = true
 
       p.user = ENV['PUSHOVER_USER']
